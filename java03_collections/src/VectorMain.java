@@ -35,7 +35,10 @@ public class VectorMain {
 			Random ran = (Random)vv.lastElement();
 			System.out.println("난수=" + ran.nextInt());
 			
-			//
+			//객체 지우기
+			vv.remove(3); // index 3번째 지우기
+			vv.removeAll(vv); // vv의 모든 객체 지우기
+			System.out.println("객체의 수 -->"+ vv.size());
 	}
 
 }
