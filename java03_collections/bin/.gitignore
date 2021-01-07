@@ -8,3 +8,12 @@
 /TreeSetTest.class
 /VectorMain.class
 /VectorTest.class
+/HashTableTest.class
+/TreeMapTest.class
+/PropertiesTest.class
+/ObjectCompareTest.class
+/ObjectCompareTest$CompareNameDescending.class
+/ObjectCompareTest$CompareNameDesc.class
+/ObjectCompareTest$CompareNameAsc.class
+/ObjectCompareTest$CompareNoAsc.class
+/ObjectCompareTest$CompareNoDes.class
