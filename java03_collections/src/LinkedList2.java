@@ -19,7 +19,7 @@ public class LinkedList2 {
 			System.out.println(ll.pop());
 		}
 		
-		
+		System.out.println(ll.size());
 		
 	}
 

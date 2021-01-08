@@ -23,6 +23,7 @@ public class ArrayListTest1 {
 			Member m = lst.get(i);
 			m.memberPrn();
 		}
+		System.out.println(lst.size());
 	}
 
 }

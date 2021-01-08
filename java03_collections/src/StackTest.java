@@ -22,7 +22,7 @@ public class StackTest {
 
 	public static void main(String[] args) {
 		new StackTest();
-
+		System.out.println();
 	}
 
 }
