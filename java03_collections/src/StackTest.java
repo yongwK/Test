@@ -16,7 +16,7 @@ public class StackTest {
 			System.out.println(stack.size());
 		}
 		
-		
+		System.out.println(stack.size());
 		
 	}
 

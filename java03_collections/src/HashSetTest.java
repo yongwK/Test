@@ -36,6 +36,9 @@ public class HashSetTest {
 			System.out.println("hs2 --> "+ i2.next());
 		}
 		
+		System.out.println(hs1.size());
+		System.out.println(hs2.size());
+		
 	}
 
 	public static void main(String[] args) {
