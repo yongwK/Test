@@ -9,13 +9,10 @@ public class GenericMain {
 		System.out.println("gt -> " + gt.getUsername());
 		
 		GenericTest<Calendar> gt2 = new GenericTest<Calendar>();
-		gt2.setUsername(Calendar.getInstance());
+		gt2.setUsername(Calendar.getInstance()); // Calendar 객체를 생성함
 		gt2.dateOutput();
-		
-		
+	
 	}
-	
-	
 
 	public static void main(String[] args) {
 		new GenericMain();

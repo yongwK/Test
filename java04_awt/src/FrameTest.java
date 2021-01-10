@@ -40,7 +40,7 @@ public class FrameTest {
 		frm.add(BorderLayout.SOUTH, new Button("버튼4"));
 		frm.add(BorderLayout.WEST, new Button("버튼5"));
 		
-		
+	
 		
 	// 창을 show
 		frm.setVisible(true);
