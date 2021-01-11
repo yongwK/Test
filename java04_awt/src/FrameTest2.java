@@ -13,6 +13,13 @@ public class FrameTest2 extends Frame {
 		setLayout(new FlowLayout());
 		Button btn = new Button("레이아웃변경됨");
 		add(btn);
+		Button btn2 = new Button("레이아웃변경됨");
+		Button btn3 = new Button("레이아웃변경됨");
+		Button btn4 = new Button("레이아웃변경됨");
+		
+		add(btn2);
+		add(btn3);
+		add(btn4);
 		
 		setSize(500,500);
 		setVisible(true);

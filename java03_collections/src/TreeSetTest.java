@@ -46,6 +46,9 @@ public class TreeSetTest {
 		while(iss.hasNext()) {
 			System.out.println("iss -> desc" + iss.next());
 		}
+		
+		System.out.println(ts.size());
+		System.out.println(ts2.size());
 }	
 
 	

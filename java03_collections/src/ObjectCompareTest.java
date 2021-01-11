@@ -91,7 +91,7 @@ public class ObjectCompareTest {
 		//	return m1.getUsername().compareTo(m2.getUsername()); // 양수
 			return m2.getUsername().compareTo(m1.getUsername()); // 음수->오른쪽크다
 		}
-	}
+	} 
 	
 	
 	public static void main(String[] args) {
