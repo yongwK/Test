@@ -16,10 +16,7 @@ public class EmpDataSet {
 		empList.put("유승룡", new EmpVO(5, "유승룡", "02-2356-8956", "총무부", "사원"));
 		empList.put("이순신", new EmpVO(2, "이순신", "02-6936-1234", "인사부", "사원"));
 		empList.put("장영실", new EmpVO(4, "장영실", "02-9632-5236", "영업부", "부장"));
-		
-	
-	
-	
+
 	}
 	
 }
