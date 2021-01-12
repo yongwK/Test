@@ -1,6 +1,6 @@
 package mem;
 
-public class memVo {
+public class MemVo {
 
 	
 	private int memNO;
@@ -8,9 +8,9 @@ public class memVo {
 	private String tel;
 	private String addr;
 	
-	public memVo() {	}
+	public MemVo() {	}
 
-	public memVo(int memNo, String memName, String tel, String addr) {
+	public MemVo(int memNo, String memName, String tel, String addr) {
 		this.memNO = memNo;
 		this.memName = memName;
 		this.tel = tel;
@@ -49,6 +49,9 @@ public class memVo {
 		this.addr = addr;
 	}
 	
+	public void memPrt() {
+		System.out.println(memNO + "\t" + memName + "\t" + tel + "\t" + addr + "\n");
+	}
 	
 	
 }

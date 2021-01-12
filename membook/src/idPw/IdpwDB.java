@@ -2,12 +2,12 @@ package idPw;
 
 import java.util.HashMap;
 
-public class idpwDB {
+public class IdpwDB {
 
 
 	public static HashMap<String, String> idpwLst = new HashMap<String, String>();
 	
-	public idpwDB() {
+	public IdpwDB() {
 		idpwLst.put("AAA","1234");
 		idpwLst.put("BBB","1234");
 		idpwLst.put("CCC","1234");

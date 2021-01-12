@@ -1,16 +1,16 @@
 package idPw;
 
-public class idpwVo {
+public class IdpwVo {
 
 	private String id;
 	private String pwd;
 	
-	public idpwVo() {
+	public IdpwVo() {
 		
 	}
 	
 	
-	public idpwVo(String id, String pwd) {
+	public IdpwVo(String id, String pwd) {
 		this.id = id;
 		this.pwd = pwd;
 	}
