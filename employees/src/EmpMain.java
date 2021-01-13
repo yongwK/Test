@@ -22,7 +22,7 @@ public class EmpMain {
 			EmpDataSet.setEmpList();
 			
 			do {
-				String menu = conInput("메뉴[1.사원전체목록, 2.사원등록, 3.사원수정, 4.사원삭제, 5.종료]");
+				String menu = conInput("메뉴[1.사원전체목록, 2.사원등록, 3.사원수정, 4.사원삭제, 5.종료, 6.검색]");
 				if(menu.equals("5")) {
 					System.out.println("프로그램이 종료됩니다.");
 					break;
@@ -35,6 +35,8 @@ public class EmpMain {
 				}else if(menu.equals("4")) {
 					empDel();
 					
+				}else if(menu.equals("6")) {
+					empSearch();
 				}
 				empOutput();
 			}while(true);
@@ -46,6 +48,21 @@ public class EmpMain {
 		
 		
 	}
+	//
+	public void empSearch() {
+		String search = conInput("검색할 전화번호 입력"); // 010-7895-9874 이렇게 쓸수도 있고 5875 일부분만 쓸수도 있고
+		//키목록 구하기
+		Set<String> keySet = EmpDataSet.empList.keySet();
+		Iterator i = keySet.iterator();
+		while(i.hasNext()) {
+			String key = (String)i.next();
+			EmpVO vo = EmpDataSet.empList.get(key);
+			if(vo.getTel().indexOf(search)>=0) {
+				System.out.printf("%d\t%s\t%s\t%s\t%s\n",vo.getEmpNo(),vo.getEmpName(),vo.getTel(),vo.getDepart(), vo.getPosition());
+			}
+		}
+	}
+	
 	
 	//사원삭제
 	public void empDel() {

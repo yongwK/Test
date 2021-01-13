@@ -1,3 +1,4 @@
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
@@ -19,37 +20,60 @@ public class BookMain {
 	
 	public void start() {
 		
-		while(true) {
-			choice = Integer.parseInt(Input("[1.관리자로그인 2.회원로그인]"));
-			if(choice == 1) {
-				Login.id = Input("아이디");
-				Login.pwd = Input("비밀번호");
+		while(true) {///11111111
+			choice = Integer.parseInt(input("[1.관리자로그인 2.회원로그인]"));
+			if(choice == 1) {//22222222222
+				Login.id = input("아이디");
+				Login.pwd = input("비밀번호");
 				
-				if(Login.adLoginCheck()) {
+				if(Login.adLoginCheck()) {//3333333333
+					
 					System.out.println("로그인성공");
 					//초기데이터세팅
 					MemDB.setMemList();
 					BookDB.setBookList();
 					
-					choice2 = Integer.parseInt(Input("1.전체회원목록 2.회원삭제 3.책목록  4. 도서추가" ));
+					while(true) {//44444444444
+				
+						choice2 = Integer.parseInt(input("1.전체회원목록 2.회원삭제 3.전체 도서목록  4. 도서추가 5. 로그아웃" ));
+						
+						if(choice2 == 1) { memOutPut();}
+						else if(choice2 ==2) { memDel(); memOutPut();}
+						else if(choice2 ==3) { bookOutPUt(); }
+						else if(choice2 ==4) { addBook(); }
+						else if(choice2 ==5) { break; } // 관리자로그아웃 000000000000
 					
-					if(choice2 == 1) { memOutPut();}
-					else if(choice2 ==2) { memDel(); memOutPut();}
-					else if(choice2 ==3) { bookOutPUt(); }
-					//else if(choice ==4) { addBook(); }
 					
-					
-					
-				}//(Login.adLoginCheck())
-			}//(choice == 1)
-		}//while(true) {
+					}//4444444	
+					break;     // 관리자 로그아웃0000000000000
+				}//333333333
+			}//2222222222
+		}//1111111111111
 	}
 	//도서추가
-	
+	public void addBook() { ////addbook
+		Set<String> keyNum = BookDB.bookList.keySet();
+		Iterator<String> ii = keyNum.iterator();
+		try {
+			int bNo = Integer.parseInt(input("도서번호"));
+			String bName = input("도서명");
+			String bAuthor = input("작가");
+			String bPublisher = input("출판사");
+			String nAble = input("대출가능여부[가능or불가능]");
+			while(ii.hasNext()) { ////iiiiiiii
+				if(bName.equals(ii.next())) {
+					System.out.println("이미 등록된 도서입니다.");
+				}
+			}//iiiiiiiiiiii
+		}catch(NumberFormatException e) {
+			System.out.println("도서번호는 숫자(번호)를 입력하셔야 합니다.");
+		}
+		
+	}////////addbook
 	
 	//회원삭제
 	public void memDel() {
-		String memName = Input("삭제할 회원명");
+		String memName = input("삭제할 회원명");
 		MemDB.memList.remove(memName);
 	}
 	//책목록 출력
@@ -72,10 +96,13 @@ public class BookMain {
 	}
 	
 	
-	public String Input(String msg) {
+	public String input(String msg) {
 		System.out.print(msg + ":");
 		return sc.nextLine();
 	}
+
+	
+	
 	
 	public static void main(String[] args) {
 		new BookMain().start();
