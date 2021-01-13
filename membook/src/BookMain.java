@@ -1,5 +1,5 @@
-import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -13,7 +13,7 @@ import mem.MemVo;
 public class BookMain {
 	Scanner sc = new Scanner(System.in);
 
-	int choice, choice2;
+	int choice, choice2, choice3;
 	public BookMain() {	
 
 	}//public BookMain()
@@ -46,30 +46,69 @@ public class BookMain {
 					
 					}//4444444	
 					break;     // 관리자 로그아웃0000000000000
-				}//333333333
+				}//333333333	
 			}//2222222222
+			
+			
+			else if(choice ==2) { //2222222222-else
+				choice3 = Integer.parseInt(input("1. 회원등록\t 2.회원로그인\t 3.도서목록\t 4.도서검색\t 5.도서대출\t	6.도서반납\t"));
+				while(true) { //AAAAAAAAAAAAAAAAAAAAAAAA
+					
+					if(choice3 == 1) {//BBBBBBBBBBBBB
+						
+					}//BBBBBBBBBBBBBB
+					else if(choice3 ==2) {
+						
+					}
+					
+				}//AAAAAAAAAAAAAAAAAAAAAAAA
+				
+				
+				
+			}//2222222222-else
+			
+			
+			
+			
+			
+			
+			
 		}//1111111111111
 	}
 	//도서추가
 	public void addBook() { ////addbook
 		Set<String> keyNum = BookDB.bookList.keySet();
 		Iterator<String> ii = keyNum.iterator();
+		
 		try {
 			int bNo = Integer.parseInt(input("도서번호"));
 			String bName = input("도서명");
 			String bAuthor = input("작가");
 			String bPublisher = input("출판사");
-			String nAble = input("대출가능여부[가능or불가능]");
+			String bAble = input("대출가능여부[가능or불가능]");
 			while(ii.hasNext()) { ////iiiiiiii
-				if(bName.equals(ii.next())) {
-					System.out.println("이미 등록된 도서입니다.");
+				BookVo bNoKey = BookDB.bookList.get(ii.next());
+				if(bNoKey.getbAuthor()==bName) {
+					System.out.println("도서명이 중복됩니다.");
+					break;
+				}
+				if(bNoKey.getbNo()==bNo) {
+					System.out.println("도서번호가 중복됩니다.");
+					break;
 				}
 			}//iiiiiiiiiiii
-		}catch(NumberFormatException e) {
+			BookDB.bookList.put(bName, new BookVo(bNo, bName, bAuthor, bPublisher, bAble));	
+		}
+		catch(NumberFormatException e) {
 			System.out.println("도서번호는 숫자(번호)를 입력하셔야 합니다.");
 		}
 		
+		
+		
 	}////////addbook
+	
+	//회원추가
+	
 	
 	//회원삭제
 	public void memDel() {
@@ -100,9 +139,6 @@ public class BookMain {
 		System.out.print(msg + ":");
 		return sc.nextLine();
 	}
-
-	
-	
 	
 	public static void main(String[] args) {
 		new BookMain().start();

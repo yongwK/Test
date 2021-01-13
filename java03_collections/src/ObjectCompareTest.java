@@ -33,7 +33,6 @@ public class ObjectCompareTest {
 			mem.memberPrn();
 		}
 		
-		
 		System.out.println("=============번호를 이용한 오름차순 정렬 ==============");
 		Collections.sort(lst, new CompareNoAsc());
 		for(Member mem : lst) {

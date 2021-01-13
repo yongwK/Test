@@ -7,14 +7,18 @@ public class MemVo {
 	private String memName;
 	private String tel;
 	private String addr;
+	private String id;
+	private String pwd;
 	
 	public MemVo() {	}
 
-	public MemVo(int memNo, String memName, String tel, String addr) {
+	public MemVo(int memNo, String memName, String tel, String addr, String id, String pwd) {
 		this.memNO = memNo;
 		this.memName = memName;
 		this.tel = tel;
 		this.addr = addr;
+		this.id = id;
+		this.setPwd(pwd);
 	}
 
 	public int getMemNO() {
@@ -49,9 +53,25 @@ public class MemVo {
 		this.addr = addr;
 	}
 	
-	public void memPrt() {
-		System.out.println(memNO + "\t" + memName + "\t" + tel + "\t" + addr + "\n");
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getPwd() {
+		return pwd;
+	}
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
 	
+	public void memPrt() {
+		System.out.println(memNO + "\t" + memName + "\t" + tel + "\t" + addr + "\t" + id + "\t" + pwd + "\n");
+	}
 	
 }
