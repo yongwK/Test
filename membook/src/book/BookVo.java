@@ -1,7 +1,7 @@
 package book;
 
 public class BookVo {
-	private int bNo;
+	private String bNo;
 	private String bName;
 	private String bAuthor;
 	private String bPublisher;
@@ -9,7 +9,7 @@ public class BookVo {
 	
 	public BookVo() {}
 	
-	public BookVo(int bNo, String bName, String bAuthor, String bPublisher, String bAble) {
+	public BookVo(String bNo, String bName, String bAuthor, String bPublisher, String bAble) {
 	this.bNo = bNo;
 	this.bName = bName;
 	this.bAuthor = bAuthor;
@@ -17,11 +17,11 @@ public class BookVo {
 	this.bAble = bAble;
 	}
 
-	public int getbNo() {
+	public String getbNo() {
 		return bNo;
 	}
 
-	public void setbNo(int bNo) {
+	public void setbNo(String bNo) {
 		this.bNo = bNo;
 	}
 

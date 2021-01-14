@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -56,7 +57,13 @@ public class MenuTest extends JFrame implements ActionListener {
 		JComboBox<Integer> fontSize = new JComboBox<Integer>();
 		DefaultComboBoxModel<Integer> fontSizeModel = new DefaultComboBoxModel<Integer>();
 		
+		//글꼴을 넣을 콤보박스
+		JComboBox<String> fontName;
 		
+		
+		//font 관련기능
+		int bold = 0, italic = 0;
+		Font fnt = new Font("굴림체",0,14);
 		
 		////////////////////////	
 		String textBuffer;
@@ -104,11 +111,26 @@ public class MenuTest extends JFrame implements ActionListener {
 		}
 		// fontSize에  모델 대입하기 setModel();
 		fontSize.setModel(fontSizeModel);
+		
+		//초기글자크기
+		fontSize.setSelectedItem(14);
+		
 		// tb에 comboBox 대입
 		tb.add(fontSize);
 		add(BorderLayout.NORTH, tb);
 		
+		// 윈도우 운영체제의 글꼴 얻어오기  클래스 GraphicsEnvironment // 생성자메서드 protected라서 객체를 return해주는 메서드 사용
+		GraphicsEnvironment ge =  GraphicsEnvironment.getLocalGraphicsEnvironment();
+		 // fontList에 글꼴이 다 들어가있다 getAvailableFontFamilyNames() 메서드가 글꼴을 가져오는 메소드 임
+		String[] fntList = ge.getAvailableFontFamilyNames();
+		fontName = new JComboBox<String>(fntList);
 		
+		//폰트 초기값설정
+		fontName.setSelectedItem("굴림체");
+		tb.add(fontName);
+		
+		
+		ta.setFont(fnt);
 		//////////////////////////////
 		
 		//단축키설정
@@ -135,48 +157,86 @@ public class MenuTest extends JFrame implements ActionListener {
 		editplusMenuItem.addActionListener(this);
 		compileMenuItem.addActionListener(this);
 		
-		
+		//툴바
 		newBtn.addActionListener(this);
 		openBtn.addActionListener(this);
 		saveBtn.addActionListener(this);
 		boldBtn.addActionListener(this);
 		italicBtn.addActionListener(this);
+		fontSize.addActionListener(this);
+		fontName.addActionListener(this);
 		}
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	//	오버라이딩						JMenu, JButton, JComboBOx  // 종류를 구별하는것
 	public void actionPerformed(ActionEvent ae) {
-		String eventMenu = ae.getActionCommand();
-		Object eventObj = ae.getSource();
 		
-		if(eventMenu.equals("종료")) {
-			System.exit(0);
-		}else if(eventMenu.equals("오려두기")) {
-			setCut();
-		}else if(eventMenu.equals("붙여넣기")) {
-			setPaste();
-		}else if(eventMenu.equals("복사하기")) {
-			setCopy();
-		}else if(eventMenu.equals("메모장")) {
-			startRuntime("notepate.exe");
-		}else if(eventMenu.equals("크롬")) {
-			//						\ --> / 로 바꿔줘야함			경로쓰고 한칸 띄우고   내가 원하는 주소 설정가능
-			startRuntime("C://Program Files/Google/Chrome/Application/chrome.exe https://www.nate.com");
-		}else if(eventMenu.equals("에디트플러스")) {
-			startRuntime("C://Program Files/EditPlus/editplus.exe");
-		}else if(eventObj == boldBtn) {
-			Font fnt = new Font("궁서체", Font.BOLD, 20);
-			ta.setFont(fnt);
+		Object eventObj = ae.getSource();//getSource()는 componenet구분없이 사용가능 
+		
+		//이벤트가 발생한 객체가 어떤 클래스로 생성된 것인지 확인(객체의종류)
+		if(eventObj instanceof JMenuItem) {    // eventObj 이 JMenuItem 클래스로 만들어진거니?
+			String eventMenu = ae.getActionCommand();
+			if(eventMenu.equals("종료")) {
+				System.exit(0);
+			}else if(eventMenu.equals("오려두기")) {
+				setCut();
+			}else if(eventMenu.equals("붙여넣기")) {
+				setPaste();
+			}else if(eventMenu.equals("복사하기")) {
+				setCopy();
+			}else if(eventMenu.equals("메모장")) {
+				startRuntime("notepad.exe");
+			}else if(eventMenu.equals("크롬")) {
+				//				\ --> / 로 바꿔줘야함			경로쓰고 한칸 띄우고   내가 원하는 주소 설정가능
+				startRuntime("C://Program Files/Google/Chrome/Application/chrome.exe https://www.nate.com");
+				
+			}
 		}
+		
+		else if(eventObj instanceof JButton) {
+			if(eventObj == boldBtn) {
+				if(bold == 0) {
+					bold = 1;
+				}else {
+					bold = 0;
+				}
+				fnt = new Font((String)fontName.getSelectedItem(), bold+italic, (Integer)fontSize.getSelectedItem());
+				ta.setFont(fnt);
+			}
+		
+		
+			else if(eventObj == italicBtn) {
+				if(italic ==0) { italic =2; }
+				else { italic = 0; }
+				fnt = new Font((String)fontName.getSelectedItem(), bold+italic, (Integer)fontSize.getSelectedItem());
+				ta.setFont(fnt);
+			}
+		}
+		
+		
+		
+		else if(eventObj instanceof JComboBox) {
+			if(eventObj == fontSize || eventObj == fontName) {
+				fnt = new Font((String)fontName.getSelectedItem(), bold+italic, (Integer)fontSize.getSelectedItem());
+				ta.setFont(fnt);
+			}
+		}	
 	}
-	
-	
-	
-	
-	// 툴바 생성  -> 바안에 JButton 이 들어간다(라벨이 이미지임)
-	
-	
-	
-	
+		
+		
+		
+		
+		
+
 	
 	// 외부 프로그램을 실행시키는 클래스 java.lang    Runtime class
 	public void startRuntime(String process) {
@@ -187,14 +247,19 @@ public class MenuTest extends JFrame implements ActionListener {
 			run.exec(process);	
 		}catch(IOException ie) {
 			ie.getStackTrace();
-		}
-		
+		}	
 	}
 
+	
+	
+	
 	//복사하기
 	public void setCopy() {
 		textBuffer = ta.getSelectedText();
 	}
+	
+	
+	
 	
 	//붙여넣기 ---> 오려둔 문자가 --> 커서의 위치로 들어가야한다. // 오려두기를 안하면 실행 안되도됨 즉 textBuffer == null일떄
 	public void setPaste() {
@@ -203,12 +268,19 @@ public class MenuTest extends JFrame implements ActionListener {
 		}
 	}
 	
+	
+	
+	
 	//오려두기
 	public void setCut() {
 		// 선택된 글자를 가져오는것 // 선택된 색을 가져오는것 getSelectedColor()
 		textBuffer = ta.getSelectedText();
 		ta.replaceSelection(""); // 위에서 선택된 텍스트를 ""로 바꿔준다.
 	}
+	
+	
+	
+	
 	
 	//단축키설정
 	public void setShortCut() {
@@ -228,9 +300,12 @@ public class MenuTest extends JFrame implements ActionListener {
 		//저장 Ctrl + s
 		saveMenuItem.setMnemonic(KeyEvent.VK_S);
 		saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
-	
 	}
 
+	
+	
+	
+	
 	public static void main(String[] args) {
 		new MenuTest();
 

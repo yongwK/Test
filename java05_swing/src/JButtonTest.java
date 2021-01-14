@@ -31,7 +31,7 @@ public class JButtonTest extends JFrame {
 		add(btn2);
 		
 		
-		//RadioButton 만들기
+		//JRadioButton 만들기
 		JPanel pane = new JPanel();
 		pane.setLayout(new GridLayout(3,1));
 		
