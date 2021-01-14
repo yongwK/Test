@@ -58,9 +58,8 @@ public class BookVo {
 	}
 
 	public void bookPrt() {
-		System.out.println(bNo + "\t" + bName + "\t" + bAuthor + "\t" + bPublisher + "\t" + bAble +"\n");
+		System.out.printf("%s\t\t%s\t\t\t\t%s\t\t\t\t%s\t\t\t%s\n",bNo,bName,bAuthor,bPublisher,bAble);
 	}
-	
 	
 	
 }

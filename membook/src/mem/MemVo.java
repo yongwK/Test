@@ -9,10 +9,14 @@ public class MemVo {
 	private String addr;
 	private String id;
 	private String pwd;
+	private String leanbookName;
+	private String borrowDate;
+	private String dueDate;
 	
 	public MemVo() {	}
 
-	public MemVo(int memNo, String memName, String tel, String addr, String id, String pwd) {
+	public MemVo(int memNo, String memName, String tel,
+			String addr, String id, String pwd, String leanBookName,  String borrowDate, String dueDate ) {
 		this.memNO = memNo;
 		this.memName = memName;
 		this.tel = tel;
@@ -70,8 +74,32 @@ public class MemVo {
 		this.pwd = pwd;
 	}
 	
+	public String getBorrowDate() {
+		return borrowDate;
+	}
+
+	public void setBorrowDate(String borrowDate) {
+		this.borrowDate = borrowDate;
+	}
+
+	public String getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(String dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	public String getLeanbookName() {
+		return leanbookName;
+	}
+
+	public void setLeanbookName(String leanbookName) {
+		this.leanbookName = leanbookName;
+	}
+
 	public void memPrt() {
-		System.out.println(memNO + "\t" + memName + "\t" + tel + "\t" + addr + "\t" + id + "\t" + pwd + "\n");
+		System.out.println(memNO + "\t" + memName + "\t" + tel + "\t" + addr + "\t" + id + "\t" + pwd + "\n" );
 	}
 	
 }

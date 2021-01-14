@@ -31,30 +31,30 @@ public class Login {
 	}
 
 	public static boolean loginCheck() {
-		boolean sw = false;
-		if(id == "" || pwd == "") {
-			System.out.println("아이디와 비밀번호를 입력해주세요");
-			return sw;
-		}
-		
-		else { //@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-			Set<String> keySet = MemDB.memList.keySet();
-			Iterator<String> i = keySet.iterator();
-			while(i.hasNext()) { //AAAAAAAAAAAAAAAAAAAAAAAAAAA
-				String key = (String)i.next();
-				MemVo vo = MemDB.memList.get(key);
-				if(vo.getId().indexOf(id)>=0 && vo.getPwd().indexOf(pwd)>=0) {
-					sw = true;
-					break;
-				}
-				else {
-					sw =false;
-				}	
-			} //AAAAAAAAAAAAAAAAAAAAA
-		
-		return sw;	
-			
-		} //@@@@@@@@@@@@@@@@@@@
+	      boolean sw = false;
+	      if(id == "" || pwd == "") {
+	         System.out.println("아이디와 비밀번호를 입력해주세요");
+	         return sw;
+	      }
+	      
+	      else { //@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	         Set<String> keySet = MemDB.memList.keySet();
+	         Iterator<String> i = keySet.iterator();
+	         while(i.hasNext()) { //AAAAAAAAAAAAAAAAAAAAAAAAAAA
+	            String key = (String)i.next();
+	            MemVo vo = MemDB.memList.get(key);
+	            if(vo.getId().equals(id) && vo.getPwd().equals(pwd)) {
+	               sw = true;
+	               break;
+	            }
+	            else {
+	               sw =false;
+	            }   
+	         } //AAAAAAAAAAAAAAAAAAAAA
+	      
+	      return sw;   
+	         
+	      } //@@@@@@@@@@@@@@@@@@@
 	}
 }		
 			
