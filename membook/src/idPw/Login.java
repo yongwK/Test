@@ -20,7 +20,7 @@ public class Login {
 			return false;
 		}
 		else {
-			if(id.equals("1") && pwd.equals("1")) {
+			if(id.equals("master") && pwd.equals("1234")) {
 				return true;
 			}
 			else {

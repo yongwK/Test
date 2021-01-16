@@ -21,6 +21,7 @@ public class BookMain {
 	}//public BookMain()
 	
 	public void start() {
+		System.out.println("==============도서관리 시스템=============");
 		//초기데이터세팅
 		MemDB.setMemList();
 		BookDB.setBookList();
@@ -162,19 +163,19 @@ public class BookMain {
 		boolean sw = true;
 		Set<String> key = MemDB.memList.keySet();
 		Iterator<String> i = key.iterator();
-		System.out.println();
+		System.out.println("회원이름\t대출도서명\t대출일\t반납일");
 		while(i.hasNext()) {
 			MemVo mVo = MemDB.memList.get(i.next());
-			if(mVo.getLeanbookName() == null) {
+			if(mVo.getLeanbookName().equals("X")) {
 				sw = false;
+				System.out.println("대출한 도서가 없습니다");
+				break;
 			}
 			else {
 				System.out.printf("%s\t\t%s\t\t%s\t\t%s\n",mVo.getMemName(),mVo.getLeanbookName(),
 						mVo.getBorrowDate(), mVo.getDueDate());
+				break;
 			}
-		}
-		if(sw = false) {
-			System.out.println("대출된 도서가 없습니다.");
 		}
 	}
 	
@@ -188,23 +189,30 @@ public class BookMain {
 			System.out.println("존재하지 않는 회원명입니다.");
 		}
 		else {
-			String returnBookName = input("반납할 도서를 입력하세요");
-			BookVo bVo = BookDB.bookList.get(returnBookName);
-			if(bVo ==null) {
-				System.out.println("저희 도서관 책이 아닙니다.");
+			if(mVo.getId().equals(Login.id)) {
+				
+				String returnBookName = input("반납할 도서를 입력하세요");
+				BookVo bVo = BookDB.bookList.get(returnBookName);
+				if(bVo == null) {
+					System.out.println("저희 도서관 책이 아닙니다.");
+				}
+				else if(mVo.getLeanbookName().equals(returnBookName)) {
+					bVo.setbAble("O");
+					mVo.setBorrowDate("0");
+					mVo.setDueDate("0");
+					mVo.setLeanbookName("X");
+					System.out.println("반납이 완료 되었습니다.");
+				}
+				else { System.out.println("반납에 실패했습니다.");			}
 			}
-			else if(mVo.getLeanbookName().equals(bVo)) {
-				bVo.setbAble("O");
-				mVo.setBorrowDate("0");
-				mVo.setDueDate("0");
-				mVo.setLeanbookName("0");
-				System.out.println("반납이 완료 되었습니다.");
+			
+			else {
+				System.out.println("아이디와 회원명이 일치하지 않습니다.");
 			}
-			else { System.out.println("반납에 실패했습니다.");			}
 		}
 	}
 	
-	//도서 대출
+	//도서 대출  // 추가하자 한권만 빌릴수있게
 	public void bookLean() {
 		String day = sdf.format(now.getTime());
 		String bName = input("대출할 도서명을 쓰세요");
@@ -221,22 +229,42 @@ public class BookMain {
 			else {
 					int bookBrw = Integer.parseInt(input("도서를 대출하시겠습니까([Y=1 , N= 1을 제외한 다른키를 눌러주세요)?"));
 						
-						if(bookBrw == 1) {				
+						if(bookBrw == 1) {			//@@@@@@@@@@@@@@@@@@@@@	
 							String name = input("회원명을 입력하세요");
 							MemVo mVo = MemDB.memList.get(name);
 							if(mVo==null) {
 								System.out.println("존재하지 않는 회원명입니다.");
 							}
 							else {
-								mVo.setLeanbookName(bName);
-								mVo.setBorrowDate(day);
-								now.add(Calendar.DAY_OF_MONTH, 14);
-								day = sdf.format(now.getTime());
-								mVo.setDueDate(day);
-								bVo.setbAble("X");
-								System.out.println("대출이 완료되었습니다.");
+								
+								if(  mVo.getId().equals(Login.id) ) {
+									if(!mVo.getLeanbookName().equals("X")) { System.out.println("책은 1권만 빌릴수 있습니다. 책을 반납하고 빌려주세요");}
+									else {
+										//여기서 한권만빌릴수 있게 구현해야될거 같은뎅 if 쓰고 아닐떄 아래 빌려지게
+										mVo.setLeanbookName(bName);
+										mVo.setBorrowDate(day);
+										now.add(Calendar.DAY_OF_MONTH, 14);
+										day = sdf.format(now.getTime());
+										mVo.setDueDate(day);
+										bVo.setbAble("X");
+										System.out.println("대출이 완료되었습니다.");
+									}
+								}
+								else {
+									System.out.println("아이디와 회원명이 일치하지 않습니다.");
+								}
+								
+								
+								
+								
+								
+								
 							}
-						}
+						}        //@@@@@@@@@@@@@@@@@
+						
+						
+						
+						
 						
 						else {
 							System.out.println("도서 대출을 종료합니다");
@@ -253,18 +281,20 @@ public class BookMain {
 	
 	//도서 검색
 	public void bookSearch() {
+		System.out.println();
 		String search = input("검색할 도서명");
 		// 키목록 구하기
 		Set<String> keySet = BookDB.bookList.keySet();
 		Iterator<String> i = keySet.iterator();
+		System.out.println("도서명\t대출가능여부[O,X]");
 		while(i.hasNext()) {
 			String key = (String)i.next();
 			BookVo vo = BookDB.bookList.get(key);
 			if(vo.getbName().indexOf(search)>=0) {
-				System.out.println(vo.getbName() + vo.getbAble());
+				System.out.printf("%s\t%s",vo.getbName(), vo.getbAble());
 			}
 		}
-		
+		System.out.println();
 	}
 	
 	
@@ -287,9 +317,8 @@ public class BookMain {
 			}
 		}//iiiiiiiiiiii
 		if(sw == true) {
-			BookDB.bookList.put(bNo, new BookVo(bNo, bName, bAuthor+"\t", bPublisher+"\t", "O"));
+			BookDB.bookList.put(bNo, new BookVo(bNo, bName, bAuthor, bPublisher, "O"));
 		}
-
 	}////////addbook
 	
 	//회원추가
@@ -321,8 +350,9 @@ public class BookMain {
 			}
 		}
 		if(sw = true) {
-			MemDB.memList.put(memName, new MemVo(memNO, memName, tel, addr, id, pwd, "0", "0", "0"));
+			MemDB.memList.put(memName, new MemVo(memNO, memName, tel, addr, id, pwd, "X", "X", "X"));
 		}
+		System.out.println();
 	}
 	
 	//회원삭제
@@ -332,25 +362,32 @@ public class BookMain {
 	}
 	//책목록 출력
 	public void bookOutPut() {
+		System.out.println();
 		Set<String> keyLst = BookDB.bookList.keySet();
 		Iterator<String> ii = keyLst.iterator();
-		System.out.println("도서번호\t\t도서명\t\t\t\t작가\t\t\t\t\t출판사\t\t\t대출가능여부[O,X]");
+		System.out.println("|도서번호\t도서명\t\t작가\t출판사\t대출가능여부[O,X]|");
+		System.out.println("=====================================================|");
 		while(ii.hasNext()) {
 			BookVo vo = BookDB.bookList.get(ii.next());
-			vo.bookPrt();
+			System.out.printf("%s\t%s\t\t%s\t%s\t%s\n", vo.getbNo(),vo.getbName(),vo.getbAuthor(),
+					vo.getbPublisher(),vo.getbAble());
 		}
+		System.out.println();
 	}
 	//회원목록 출력
 	public void memOutPut() {
+		System.out.println();
 		Set<String> keyList = MemDB.memList.keySet();
 		Iterator<String> ii = keyList.iterator();
-		System.out.println("회원번호\t\t이름\t\t\t전화번호\t\t\t주소\t\t아이디\t\t비밀번호\t\t대출도서명\t\t대출일\t\t반납일");
+		System.out.println("|회원번호\t이름\t전화번호\t\t주소\t아이디\t비밀번호\t대출도서명\t대출일\t반납일|");
+		System.out.println("============================================================================|");
 		while(ii.hasNext()) {
 			MemVo mVo = MemDB.memList.get(ii.next());
-			System.out.printf("%d\t\t%s\t\t%s\t\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\n",mVo.getMemNO(),mVo.getMemName(),
+			System.out.printf("%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",mVo.getMemNO(),mVo.getMemName(),
 					mVo.getTel(),mVo.getAddr(),mVo.getId(),mVo.getPwd(),mVo.getLeanbookName(),
 					mVo.getBorrowDate(),mVo.getDueDate());
 		}
+	System.out.println();
 	}
 	
 	// 콘솔입력

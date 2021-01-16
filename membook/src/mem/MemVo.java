@@ -16,13 +16,16 @@ public class MemVo {
 	public MemVo() {	}
 
 	public MemVo(int memNo, String memName, String tel,
-			String addr, String id, String pwd, String leanBookName,  String borrowDate, String dueDate ) {
+			String addr, String id, String pwd, String leanbookName,  String borrowDate, String dueDate ) {
 		this.memNO = memNo;
 		this.memName = memName;
 		this.tel = tel;
 		this.addr = addr;
 		this.id = id;
-		this.setPwd(pwd);
+		this.pwd = pwd;
+		this.leanbookName = leanbookName;
+		this.borrowDate = borrowDate;
+		this.dueDate = dueDate;
 	}
 
 	public int getMemNO() {

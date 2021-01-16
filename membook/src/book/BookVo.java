@@ -58,7 +58,7 @@ public class BookVo {
 	}
 
 	public void bookPrt() {
-		System.out.printf("%s\t\t%s\t\t\t\t%s\t\t\t\t%s\t\t\t%s\n",bNo,bName,bAuthor,bPublisher,bAble);
+		System.out.printf("%s\t%s\t%s\t%s\t%s\n",bNo,bName,bAuthor,bPublisher,bAble);
 	}
 	
 	

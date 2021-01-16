@@ -4,12 +4,16 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -18,6 +22,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 
 public class MenuTest extends JFrame implements ActionListener {
 	JTextArea ta = new JTextArea();
@@ -138,7 +145,7 @@ public class MenuTest extends JFrame implements ActionListener {
 		
 		
 		//
-		setSize(500,500);
+		setSize(1000,1000);
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
@@ -185,7 +192,9 @@ public class MenuTest extends JFrame implements ActionListener {
 		//이벤트가 발생한 객체가 어떤 클래스로 생성된 것인지 확인(객체의종류)
 		if(eventObj instanceof JMenuItem) {    // eventObj 이 JMenuItem 클래스로 만들어진거니?
 			String eventMenu = ae.getActionCommand();
-			if(eventMenu.equals("종료")) {
+			if(eventMenu.equals("열기")) {
+				fileOpen();
+			}else if(eventMenu.equals("종료")) {
 				System.exit(0);
 			}else if(eventMenu.equals("오려두기")) {
 				setCut();
@@ -220,9 +229,11 @@ public class MenuTest extends JFrame implements ActionListener {
 				fnt = new Font((String)fontName.getSelectedItem(), bold+italic, (Integer)fontSize.getSelectedItem());
 				ta.setFont(fnt);
 			}
+			else if(eventObj == openBtn) {
+				fileOpen();
+			}
+			
 		}
-		
-		
 		
 		else if(eventObj instanceof JComboBox) {
 			if(eventObj == fontSize || eventObj == fontName) {
@@ -236,7 +247,66 @@ public class MenuTest extends JFrame implements ActionListener {
 		
 		
 		
-
+	//파일열기
+	public void fileOpen() {
+		File f = new File("D://SAMPLE");
+		// 파일탐색기    ---- 열기를 누르면 파일탐색기가 나와야 한다.  JFileChooser()
+		JFileChooser fc = new JFileChooser(f);      //  showOpenDialog(Component parent) // Component parent --> 부모컨테이너를 알려줘  this
+		
+		//여러파일을 선택할 수 있도록 설정
+		fc.setMultiSelectionEnabled(true); // true: 다중선택 가능, false : 1개
+		
+		
+		//필터설정
+		FileFilter ff1 = new FileNameExtensionFilter("이미지","jpg","jpeg","gif","png","bmp");
+		fc.addChoosableFileFilter(ff1);
+		
+		
+		FileFilter ff2 = new FileNameExtensionFilter("Java", "java","JAVA","JAVA");
+		fc.addChoosableFileFilter(ff2);
+		
+		// 0 : 열기, 1 : 취소
+		int state = fc.showOpenDialog(this); // 파일 탐색기가 열림 --> 기본경로 지정  객체 생성할떄 JFileChooser(String ~);  
+		if(state == 0) {
+			try {
+				// 원래 있던 컨텐츠 지우기
+				ta.setText("");
+				// 선택된 파일을 가져오기      getSelectedFIle() --> File      // getSelectedFiles() ---> File[]
+				// File selFile = fc.getSelectedFile(); 1개파일 열기가능
+				File selFile[] = fc.getSelectedFiles();
+				
+				for( File s : selFile) {
+					FileReader fr = new FileReader(s);
+					BufferedReader br = new BufferedReader(fr);
+					
+					while(true) {
+						String inData = br.readLine();
+						if(inData==null) {
+							break;
+						}
+						else {
+							ta.append(inData+"\n");
+						}
+					} // while종료
+				} //for문 종료
+				
+				
+				
+				
+				
+				
+				
+				
+			}catch(Exception e) {
+				System.out.println("파일열기 에러 발생..");
+			}
+			
+			
+		}
+		//showOpenDialog() --- > int 로 반환되며   이때 open 일떄 cancle일떄 마다 int 값이 다르므로 구분가능하다.
+		
+		
+	}
 	
 	// 외부 프로그램을 실행시키는 클래스 java.lang    Runtime class
 	public void startRuntime(String process) {
