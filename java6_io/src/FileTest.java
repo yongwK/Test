@@ -19,6 +19,7 @@ public class FileTest {
 			}
 			else {
 				System.out.println("폴더가 생성실패");
+			
 			}
 		}
 		
@@ -40,6 +41,7 @@ public class FileTest {
 		//마지막수정일 얻어오기
 		// 현재 날자의 데이터를 밀리초로 가지고온다.
 		long lastDate = f2.lastModified();
+		System.out.println("초초");
 		System.out.println("lastDate = " + lastDate);  
 		
 		
@@ -69,7 +71,7 @@ public class FileTest {
 		// getAbsoluteName() : 드라이브명, 경로, 파일명
 		// getName() : 파일명
 		// getParent() : 드라이브명, 경로
-		// isHiden() :
+		// isHiden() : 숨김파일이니?
 		for( File f : file) {
 			if(f.isDirectory()) {
 				if(f.isHidden()) {

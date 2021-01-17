@@ -11,9 +11,11 @@ public class FileWriterTest {
 			String txt = "자바에서 문자열을 파일로 쓰기 연습!!!!!";
 			
 			
-			//1.  배열로 저장    writw(
+			//1.  배열로 저장    writer
 			//문자열을 char 배열로  생성              
 			char c[] = txt.toCharArray();    
+			fw.write(c);
+			
 			fw.write(c, 5, c.length-5);        // 인덱스 0부터 배열의 길이만큼  , 내가 원하는 위치에서 시작할수 있고 시작한 곳만큼 길이에서 빼줘야한다.
 			fw.flush();						//쓰기를 끝내고 나서  꼭 flush를 해줘야한다.
 			

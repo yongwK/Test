@@ -20,8 +20,9 @@ public class InputStreamTest {
 				System.out.println(inData + "," + (char)inData);
 				
 				
+				
 				//read(byte[] b) : 배열의 크기만큼 한번에 읽어온다.
-				byte[] inData = new byte[50];         // 5byte일고 출력 5byte읽고 출력 
+				byte[] inData = new byte[10];         // 5byte일고 출력 5byte읽고 출력 
 				// byte 수			   읽은 byte는 배열에 저장
 				int cnt = is.read(inData);
 				//System.out.println(new String(inData) +"--->" +cnt); // 비어있는 칸까지 같이 출력됨
@@ -29,6 +30,7 @@ public class InputStreamTest {
 				
 				if(cnt<=0) break;
 				*/
+				
 				//       읽어온데이터를 담을 배열, 배열의 저장위치 index, 읽어올 byte갯수
 				//read(byte[] int,int
 				byte inData[] = new byte[10];

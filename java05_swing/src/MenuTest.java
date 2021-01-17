@@ -60,13 +60,15 @@ public class MenuTest extends JFrame implements ActionListener {
 		ImageIcon boldIcon = new ImageIcon("icon/bold01.gif"); JButton boldBtn = new JButton(boldIcon);
 		//이탤릭
 		ImageIcon italicIcon = new ImageIcon("icon/italic01.gif"); JButton italicBtn = new JButton(italicIcon);	
+		
+		
+		
 		//글자크기
 		JComboBox<Integer> fontSize = new JComboBox<Integer>();
 		DefaultComboBoxModel<Integer> fontSizeModel = new DefaultComboBoxModel<Integer>();
 		
 		//글꼴을 넣을 콤보박스
 		JComboBox<String> fontName;
-		
 		
 		//font 관련기능
 		int bold = 0, italic = 0;
@@ -255,13 +257,9 @@ public class MenuTest extends JFrame implements ActionListener {
 		
 		//여러파일을 선택할 수 있도록 설정
 		fc.setMultiSelectionEnabled(true); // true: 다중선택 가능, false : 1개
-		
-		
 		//필터설정
 		FileFilter ff1 = new FileNameExtensionFilter("이미지","jpg","jpeg","gif","png","bmp");
 		fc.addChoosableFileFilter(ff1);
-		
-		
 		FileFilter ff2 = new FileNameExtensionFilter("Java", "java","JAVA","JAVA");
 		fc.addChoosableFileFilter(ff2);
 		
@@ -288,24 +286,14 @@ public class MenuTest extends JFrame implements ActionListener {
 							ta.append(inData+"\n");
 						}
 					} // while종료
-				} //for문 종료
-				
-				
-				
-				
-				
-				
-				
-				
+				} //for문 종료			
 			}catch(Exception e) {
 				System.out.println("파일열기 에러 발생..");
 			}
-			
-			
+					
 		}
+		
 		//showOpenDialog() --- > int 로 반환되며   이때 open 일떄 cancle일떄 마다 int 값이 다르므로 구분가능하다.
-		
-		
 	}
 	
 	// 외부 프로그램을 실행시키는 클래스 java.lang    Runtime class

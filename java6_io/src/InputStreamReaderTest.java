@@ -27,7 +27,8 @@ public class InputStreamReaderTest {
 				// 읽은 문자의 수
 				int cnt = isr.read(inData);
 				
-				String inStr1 = new String(inData,0,cnt);
+				
+				String inStr1 = new String(inData);
 				String inStr2 = String.valueOf(inData,0,cnt);
 				
 				System.out.println(inStr1 + "-----");
