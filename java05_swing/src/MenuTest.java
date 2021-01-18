@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.DefaultComboBoxModel;
@@ -18,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
@@ -77,6 +79,9 @@ public class MenuTest extends JFrame implements ActionListener {
 		////////////////////////	
 		String textBuffer;
 		
+		
+		//현재 작업중인 파일객체
+		File nowFile;
 		
 		public MenuTest() {
 			
@@ -147,7 +152,7 @@ public class MenuTest extends JFrame implements ActionListener {
 		
 		
 		//
-		setSize(1000,1000);
+		setSize(500,500);
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
@@ -194,8 +199,12 @@ public class MenuTest extends JFrame implements ActionListener {
 		//이벤트가 발생한 객체가 어떤 클래스로 생성된 것인지 확인(객체의종류)
 		if(eventObj instanceof JMenuItem) {    // eventObj 이 JMenuItem 클래스로 만들어진거니?
 			String eventMenu = ae.getActionCommand();
-			if(eventMenu.equals("열기")) {
+			if(eventMenu.equals("새문서")) {
+				newFile();
+			}else if(eventMenu.equals("열기")) {
 				fileOpen();
+			}else if(eventMenu.equals("저장")) {
+				fileSave();
 			}else if(eventMenu.equals("종료")) {
 				System.exit(0);
 			}else if(eventMenu.equals("오려두기")) {
@@ -234,6 +243,12 @@ public class MenuTest extends JFrame implements ActionListener {
 			else if(eventObj == openBtn) {
 				fileOpen();
 			}
+			else if(eventObj == newBtn) {
+				newFile();
+			}
+			else if(eventObj == saveBtn) {
+				fileSave();
+			}
 			
 		}
 		
@@ -244,9 +259,69 @@ public class MenuTest extends JFrame implements ActionListener {
 			}
 		}	
 	}
+	
+	
+	
+	//새문서
+	public void newFile() {
+		//작업문서 객체 초기화
+		nowFile = null;
+		ta.setText("");
+		setTitle("메모장");
+	}
+		
+	//파일저장
+	public void fileSave() {
+		//처음저장할때
+		if(nowFile==null) {
+			//파일을 저장할수 있는 경로를 만들어줘야 한다. FileChooser . showSaveDialog
+			JFileChooser fc = new JFileChooser();
+			
+			//save == 0, cancle == 1;
+			int state = fc.showSaveDialog(this); //부모 컨테이너는 Frame뜻함
+			if(state ==0) { // 저장버튼 선택시
+				//선택한 드라이브명, 경로, 파일명 
+				File nFile = fc.getSelectedFile();
+				// 글내용 
+				String str = ta.getText();
+				// 중복된이름
+				if(nFile.exists()) {
+					JOptionPane.showMessageDialog(this, "이미존재하는 파일명입니다.\n저장하기가 취소되었습니다.");
+				}else {
+					try {
+						// FileWriter 객체
+						FileWriter fw = new FileWriter(nFile);	
+						fw.write(str,0,str.length());
+						fw.flush();
+						fw.close();
+						
+						nowFile = nFile;
+						setTitle(nFile.getPath());
+						
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}	
+		else {
+			//이미있는 문서를 열어서 수정후 저장한다.
+			String writeText = ta.getText();
+			try {
+				FileWriter fw = new FileWriter(nowFile);
+				fw.write(writeText, 0, writeText.length());
+				fw.flush();
+				fw.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
 		
 		
-		
+	}
+	
+	
 		
 		
 	//파일열기
@@ -256,7 +331,7 @@ public class MenuTest extends JFrame implements ActionListener {
 		JFileChooser fc = new JFileChooser(f);      //  showOpenDialog(Component parent) // Component parent --> 부모컨테이너를 알려줘  this
 		
 		//여러파일을 선택할 수 있도록 설정
-		fc.setMultiSelectionEnabled(true); // true: 다중선택 가능, false : 1개
+		fc.setMultiSelectionEnabled(true); // true: 다중선택 가능, false : 1개 // 드라이브명, 경로, 파일명
 		//필터설정
 		FileFilter ff1 = new FileNameExtensionFilter("이미지","jpg","jpeg","gif","png","bmp");
 		fc.addChoosableFileFilter(ff1);
@@ -274,6 +349,13 @@ public class MenuTest extends JFrame implements ActionListener {
 				File selFile[] = fc.getSelectedFiles();
 				
 				for( File s : selFile) {
+					// 현재 파일명을 JFrame의 제목으로 설정
+					// 현재 프레임이 상속되어있다.
+					String path = s.getPath();
+					setTitle(path);
+					
+					nowFile = s;
+					
 					FileReader fr = new FileReader(s);
 					BufferedReader br = new BufferedReader(fr);
 					
@@ -286,6 +368,7 @@ public class MenuTest extends JFrame implements ActionListener {
 							ta.append(inData+"\n");
 						}
 					} // while종료
+					// ta.append("==========================\n");
 				} //for문 종료			
 			}catch(Exception e) {
 				System.out.println("파일열기 에러 발생..");
