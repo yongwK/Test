@@ -17,8 +17,6 @@ public class GraphicsTest extends JFrame {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 	}
-
-	
 	//그림그리기
 	//Canvas를 상속받아 Paint()를 오버라이딩하면 처음 객체생성시 별도의 호출없이
 	//				 Paint() 메소드는 1번 자동호출된다.

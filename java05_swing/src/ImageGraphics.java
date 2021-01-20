@@ -17,13 +17,14 @@ public class ImageGraphics extends JFrame implements ActionListener{
 		JButton btn3 = new JButton("확대그리기");
 		JButton btn4 = new JButton("좌우뒤집기");
 		JButton btn5 = new JButton("상하뒤집기");
+		JButton btn6 = new JButton("일부그리기");
 	MyCanvas mc = new MyCanvas();
 	
 	//현재 선택된 버튼 라벨
 	String selBtn = "";
 	Image img;
 	public ImageGraphics() {
-		pane.add(btn1); pane.add(btn2); pane.add(btn3); pane.add(btn4); pane.add(btn5);
+		pane.add(btn1); pane.add(btn2); pane.add(btn3); pane.add(btn4); pane.add(btn5); pane.add(btn6);
 		add("North",pane);
 		add("Center",mc);
 		
@@ -38,6 +39,7 @@ public class ImageGraphics extends JFrame implements ActionListener{
 		btn3.addActionListener(this);
 		btn4.addActionListener(this);
 		btn5.addActionListener(this);
+		btn6.addActionListener(this);
 	}
 	
 	
@@ -68,35 +70,32 @@ public class ImageGraphics extends JFrame implements ActionListener{
 			
 			if(selBtn.equals("원본그리기")) {
 				// 					Canvas		image
-				g.drawImage(img, 0, 0, w, h, 0, 0, w, h, this);
+				g.drawImage(img, 0, 0, w, h,      0, 0, w, h, this);
+				
 			}else if(selBtn.equals("축소그리기")) {
 				// Canvas 의 크기를 줄이면 Image가 작아진다. (Canvas는 작게 Image는 그대로)
-				g.drawImage(img, 0, 0, w/2, h/2, 0, 0, w, h, this);
+				g.drawImage(img, 0, 0, w/2, h/2,      0, 0, w, h, this);
+				
 			}else if(selBtn.equals("확대그리기")) {
 				//캔버스 크기만큼 만 확대해서 그리기 ==> 캔버스크기를 구해야한다.
 				int cW = getWidth();
 				int cH = getHeight();
-				g.drawImage(img, 0, 0, cW, cH, 0, 0, w, h, this);
+				g.drawImage(img, 0, 0, cW, cH,      0, 0, w, h, this);
+				
 			}else if(selBtn.equals("좌우뒤집기")) {
 				//캔버스사이즈  //이미지사이즈		이  캔
 				// 1   2        1   2       (1->2)
 				// 3   4        3   4		(3->4)
-				g.drawImage(img, w, 0, 0, h, 0, 0, w, h, this);
+				g.drawImage(img, w, 0, 0, h,      0, 0, w, h, this);
+				
 			}else if(selBtn.equals("상하뒤집기")) {
-				g.drawImage(img, 0, h, w, 0, 0, 0, w, h, this);
+				g.drawImage(img, 0, 0, w, h,     0, h, w, 0, this);
+				//g.drawImage(img, 0, 0, w, h,      w, h, 0, 0, this); 상하좌우뒤집기
+			
+			}else if(selBtn.equals("일부그리기")) {
+				g.drawImage(img, 0, 0, 300, 300,     200, 200, 500, 500, this);
 			}
-			
-			
-		
-			
-			
-			
-			
-			
-			
-		
-		
-		
+			//다음거를 그리면 원래거는 사라지는 상태 
 		}
 	}
 	
