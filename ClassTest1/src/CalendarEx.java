@@ -17,7 +17,7 @@ public class CalendarEx {
 		int week = cal.get(Calendar.DAY_OF_WEEK);
 		System.out.println(week);
 		int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-
+		
 	
 		System.out.printf("\t\t %d년 %d월\n",year,month);
 		System.out.println("일\t월\t화\t수\t목\t금\t토");
